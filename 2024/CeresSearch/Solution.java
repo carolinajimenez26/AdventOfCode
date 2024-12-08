@@ -65,11 +65,18 @@ public class Solution {
 
   private static boolean overlaps(final char[][] matrix, int row, int col, 
     final char[][] option) {
-    if (getOrDefault(matrix, row, col) != option[1][1]) return false; // middle
-    if (getOrDefault(matrix, row - 1, col - 1) != option[0][0]) return false; // up left
-    if (getOrDefault(matrix, row - 1, col + 1) != option[0][2]) return false; // up right
-    if (getOrDefault(matrix, row + 1, col - 1) != option[2][0]) return false; // down left
-    if (getOrDefault(matrix, row + 1, col + 1) != option[2][2]) return false; // down right
+    
+    int optionRow = 1, optionCol = 1;
+    for (int i = -1; i < 2; i++) {
+      for (int j = -1; j < 2; j++) {
+        if (option[optionRow + i][optionCol + j] == '#') {
+          continue;
+        }
+        if (getOrDefault(matrix, row + i, col + j) != option[optionRow + i][optionCol + j]) {
+          return false;
+        }
+      }
+    }
     return true;
   }
 
