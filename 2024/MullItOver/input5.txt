@@ -1,5 +1,0 @@
-mul(don't(),mul(5,5))[result_should_be_0]
-mul(do(),mul(5,5))[result_should_be_25]
-mul(do(),mul(don't(), mul(5,5)))[result_should_be_0]
-mul(mul(mul(3,3)))[result_should_be_9]
-[result_should_be_34]
