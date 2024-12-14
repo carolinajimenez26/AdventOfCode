@@ -7,6 +7,19 @@ public class Solution {
   private static Map<Integer, Set<Integer>> pageRules = new HashMap<>();
   private static List<List<Integer>> updates = new ArrayList<>();
 
+  private static class RuleComparator implements Comparator<Integer> {
+    @Override
+    public int compare(Integer a, Integer b) {
+      if (!pageRules.containsKey(a)) {
+        return 1; // a is smaller
+      }
+      if (pageRules.get(a).contains(b)) {
+        return -1; // b is smaller
+      }
+      return 1; // a is smaller
+    }
+  }
+
   public static void main(String[] args) {
     if (args.length == 0) {
       return;
@@ -28,20 +41,26 @@ public class Solution {
   }
 
   private static void solve() {
-    int result = 0;
+    int result1 = 0;
+    int result2 = 0;
     for (final List<Integer> update : updates) {
-      result += getMiddlePageNumberIfCorrect(update);
+      if (isCorrect(update)) {
+        result1 += getMiddlePageNumber(update);
+      } else {
+        System.out.println("Update before sorting: " + update);
+        Collections.sort(update, new RuleComparator());
+        System.out.println("Update sorted: " + update);
+        result2 += getMiddlePageNumber(update);
+      }
     }
-    System.out.println("Solution: " + result);
+    System.out.println("Solution part one: " + result1);
+    System.out.println("Solution part two: " + result2);
   }
 
-  private static int getMiddlePageNumberIfCorrect(final List<Integer> update) {
-    if (isCorrect(update)) {
-      int mid = update.get(update.size() / 2);
-      System.out.println("mid " + mid);
-      return mid;
-    }
-    return 0;
+  private static int getMiddlePageNumber(final List<Integer> update) {
+    int mid = update.get(update.size() / 2);
+    System.out.println("mid " + mid);
+    return mid;
   }
 
   private static boolean isCorrect(final List<Integer> update) {
