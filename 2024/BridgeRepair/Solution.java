@@ -53,6 +53,7 @@ public class Solution {
     Integer x = nums.get(index);
     Long sum = currentResult + x;
     Long mul = currentResult * x;
+    Long concat = concat(currentResult, x);
     
     if (canSolveTo(nums, index + 1, sum, expected)) {
       // System.out.println("Using sum " + index);
@@ -64,7 +65,17 @@ public class Solution {
       return true;
     }
 
+    if (canSolveTo(nums, index + 1, concat, expected)) {
+      // System.out.println("Using concat " + index);
+      return true;
+    }
+
     return false;
+  }
+
+  private static Long concat(final Long a, final Integer b) {
+    final String result = a + "" + b;
+    return Long.parseLong(result);
   }
 
   private static void print(final Map<Long, List<Integer>> map) {
