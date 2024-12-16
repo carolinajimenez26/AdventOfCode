@@ -78,6 +78,15 @@ public class Solution {
     return Long.parseLong(result);
   }
 
+  private static Long concatFast(Long a, final Integer b) {
+    long c = b;
+    while (c > 0) {
+      a *= 10;
+      c /= 10;
+    }
+    return a + b;
+  }
+
   private static void print(final Map<Long, List<Integer>> map) {
     System.out.println("------------");
     for (Map.Entry<Long, List<Integer>> entry : map.entrySet()) {
