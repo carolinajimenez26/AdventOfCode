@@ -37,12 +37,17 @@ public class Solution {
   private static class Zero {
     Position pos;
     Set<Position> nines = new HashSet<>();
+    List<Position> ninesAll = new ArrayList<>();
     Zero(Position pos) {
       this.pos = pos;
     }
 
     public int getScore() {
       return nines.size();
+    }
+
+    public int getRating() {
+      return ninesAll.size();
     }
   }
 
@@ -59,14 +64,16 @@ public class Solution {
   }
 
   private static void solve() {
-    int result = 0;
+    int result1 = 0, result2 = 0;
     List<Zero> zeros = getZeros();
     findPaths(zeros);
     for (Zero zero : zeros) {
-      result += zero.getScore();
-      System.out.println("Zero " + zero.pos + " = " + zero.nines);
+      result1 += zero.getScore();
+      result2 += zero.getRating();
+      System.out.println("Zero " + zero.pos + " = " + zero.ninesAll);
     }
-    System.out.println("Solution " + result);
+    System.out.println("Solution part one " + result1);
+    System.out.println("Solution part two " + result2);
   }
 
   private static void findPaths(List<Zero> zeros) {
@@ -78,7 +85,9 @@ public class Solution {
   private static void findPaths(Zero zero, Position pos) {
     // System.out.println("findPaths " + pos + " = " + matrix[pos.row][pos.col]);
     if (matrix[pos.row][pos.col] == 9) {
-      zero.nines.add(new Position(pos.row, pos.col));
+      final Position ninePos = new Position(pos.row, pos.col);
+      zero.nines.add(ninePos);
+      zero.ninesAll.add(ninePos);
       return;
     }
 
